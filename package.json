@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "name": "daily-diet-api",
+  "description": "Uma API criada para um desafio do curso de Node.js da Rocketseat. Na API o usuário pode adicionar suas refeições e listar as que estão dentro ou fora da dieta",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrohenrique11/Daily-Diet-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrohenrique11/Daily-Diet-API/issues"
+  },
+  "homepage": "https://github.com/pedrohenrique11/Daily-Diet-API#readme"
+}
