@@ -1,7 +1,11 @@
-const express = require('express')
+import express from "express"
+import userRoutes from "./routes/userRoutes"
 
 const app = express()
 
-app.listen(3000, () => {
-    console.log('servidor funcionando')
+app.use(express.json())
+app.use(userRoutes)
+
+app.listen(3333, () => {
+    console.log('server is running...')
 })
