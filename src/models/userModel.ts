@@ -12,6 +12,14 @@ export const getUserById = async (id: number) => {
     })
 }
 
+export const getUserByEmail = async (email: string) => {
+    return await prisma.user.findMany({
+        where: {
+            email
+        }
+    })
+}
+
 export const createNewUser = async (name: string, email: string, password: string) => {
     return await prisma.user.create({
         data: {
