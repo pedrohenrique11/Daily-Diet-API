@@ -12,13 +12,16 @@ export const loginUser = async (req: Request, res:Response) => {
 
     const jwt = require('jsonwebtoken')
 
-    const user = await userModel.getUserByEmail(email)
-    const userEmail = user[0].email
-    const userPassword = user[0].password
+    const userObject = await userModel.getUserByEmail(email)
+    const user = userObject[0]
 
-    const token = jwt.sign({userEmail: email, userPassword: password}, "your token", { expiresIn: '1h'})
-
-    res.json({token})
+    if (user.password === password) {
+        const token = jwt.sign({userId: user.id, username: user.name}, "your token", { expiresIn: '1h'})
+    
+        res.json({token})
+    } else {
+        res.status(401).end("Invalid credentials")
+    }
 }
 
 export const createNewUser = async (req: Request, res: Response) => {
