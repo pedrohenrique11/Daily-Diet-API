@@ -31,7 +31,7 @@ export const updateMeal = async (id: number, title: string, description:string, 
     })
 }
 
-export const mealUser = async (id: number) => {
+export const deleteMeal = async (id: number) => {
     return await prisma.user.delete({
         where: {
             id
