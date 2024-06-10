@@ -1,5 +1,8 @@
 import { Request, Response } from "express" 
 import * as userModel from "../models/userModel"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 export const getAllUsers = async (req: Request, res: Response) => {
    const users = await userModel.getAllUsers()
@@ -15,13 +18,15 @@ export const loginUser = async (req: Request, res:Response) => {
     const userObject = await userModel.getUserByEmail(email)
     const user = userObject[0]
 
-    if (user.password === password) {
-        const token = jwt.sign({userId: user.id, username: user.name}, "your token", { expiresIn: '1h'})
-    
-        res.json({token})
-    } else {
+    const userPassword = password === user.password
+
+    if (!userPassword) {
         res.status(401).end("Invalid credentials")
     }
+
+    const token = jwt.sign({userId: user.id, username: user.name}, process.env.JWT_SECRET_KEY, { expiresIn: '1h'})
+    
+    res.json({token})
 }
 
 export const createNewUser = async (req: Request, res: Response) => {
@@ -40,6 +45,15 @@ export const createNewUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
     const { password } = req.body
     const id = parseInt(req.params.id)
+
+    const userObject = await userModel.getUserById(id)
+    const user = userObject[0]
+
+    const userPassword = password === user.password
+
+    if (!userPassword) {
+        res.status(401).end("Invalid credentials")
+    }
 
     try {
         await userModel.deleteUser(id)
