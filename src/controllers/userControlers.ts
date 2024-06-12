@@ -21,7 +21,7 @@ export const loginUser = async (req: Request, res:Response) => {
     const userPassword = password === user.password
 
     if (!userPassword) {
-        res.status(401).end("Invalid credentials")
+        res.status(401).send("Invalid credentials")
     }
 
     const token = jwt.sign({userId: user.id, username: user.name}, process.env.JWT_SECRET_KEY, { expiresIn: '1h'})
@@ -35,10 +35,33 @@ export const createNewUser = async (req: Request, res: Response) => {
     try {
         await userModel.createNewUser(name, email, password)
 
-        res.status(201).end("User created")
+        res.status(201).send("User created")
     }
     catch {
         res.status(404)
+    }
+}
+
+export const updateUser = async (req: Request, res: Response) => {
+    const { name, email, password, newPassword } = req.body
+    const id = parseInt(req.params.id)
+
+    const userObject = await userModel.getUserById(id)
+    const user = userObject[0]
+
+    const correctPassword = password === user.password
+    
+    if(!correctPassword) {
+        res.status(401).send("Invalid credentials")
+    }
+
+    try {
+        await userModel.updateUser(name, email, newPassword, id)
+
+        res.status(201).send('User updated')
+    }
+    catch {
+        res.status(404).send("error")
     }
 }
 
@@ -52,15 +75,15 @@ export const deleteUser = async (req: Request, res: Response) => {
     const userPassword = password === user.password
 
     if (!userPassword) {
-        res.status(401).end("Invalid credentials")
+        res.status(401).send("Invalid credentials")
     }
 
     try {
         await userModel.deleteUser(id)
         
-        res.status(201).end("User deleted")
+        res.status(201).send("User deleted")
     }
     catch {
-        res.status(404).end("Id not exist")
+        res.status(404).send("error")
     }
 }
