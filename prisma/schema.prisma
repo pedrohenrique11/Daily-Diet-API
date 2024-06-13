@@ -19,7 +19,7 @@ model Meal {
   title String
   description String?
   onDiet Boolean @default(true)
-  date String
+  createdAt DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
   userId Int
 }
