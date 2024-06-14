@@ -1,7 +1,11 @@
 import prisma from '../prisma/Client'
 
-export const getAllmeals = async () => {
-    return await prisma.meal.findMany()
+export const getAllmeals = async (id: number) => {
+    return await prisma.meal.findMany({
+        where: {
+            id,
+        }
+    })
 }
  
 export const createMeal = async (title: string, description:string, onDiet: boolean, userId: number ) => {
