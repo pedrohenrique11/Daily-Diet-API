@@ -16,11 +16,12 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         } 
     
     try {
-        jwt.verify(token, jwtSecrsetKey)
-        res.status(201).json({Access: "Granted"})
+        const user = jwt.verify(token, jwtSecrsetKey)
+        req.user = user
+
+        next()
     }
     catch {
         res.status(401).json({Access: "Danied"})
     }
-    
 }
