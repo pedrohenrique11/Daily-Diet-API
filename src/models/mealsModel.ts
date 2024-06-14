@@ -4,19 +4,18 @@ export const getAllmeals = async () => {
     return await prisma.meal.findMany()
 }
  
-export const createMeal = async (title: string, description:string, onDiet: boolean, date: string, userId: number ) => {
+export const createMeal = async (title: string, description:string, onDiet: boolean, userId: number ) => {
     return await prisma.meal.create({
         data: {
             title,
             description,
             onDiet,
-            date,
             userId,
         }
     })
 }
 
-export const updateMeal = async (id: number, title: string, description:string, onDiet: boolean, date: string, userId: number ) => {
+export const updateMeal = async (id: number, title: string, description:string, onDiet: boolean, userId: number ) => {
     return await prisma.meal.update({
         where: {
             id,
@@ -25,7 +24,6 @@ export const updateMeal = async (id: number, title: string, description:string, 
             title,
             description,
             onDiet,
-            date,
             userId,
         }
     })
