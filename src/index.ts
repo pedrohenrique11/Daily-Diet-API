@@ -3,7 +3,7 @@ import userRoutes from "./routes/userRoutes"
 import mealRoutes from "./routes/mealRoutes"
 import dotenv from "dotenv"
 
-const app = express()
+export const app = express()
 dotenv.config()
 
 app.use(express.json())
